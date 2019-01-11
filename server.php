@@ -17,19 +17,35 @@
 
         //ensure that form fields are filled properly
         if(empty($username)) {
-            array_push($errors, "Username is required");
+            array_push($errors, "Username is required.");
+        }
+        else {
+        	//username validation for duplication
+        	$query = "SELECT * FROM users WHERE username = '$username'";
+        	$result = mysqli_query($db, $query);
+        	if(mysqli_num_rows($result) > 0) {
+        		array_push($errors, "Username already in use.");
+        	}
         }
 
         if(empty($email)) {
-            array_push($errors, "Email is required");
+            array_push($errors, "Email is required.");
+        }
+        else {
+        	//email validation for duplication
+        	$query = "SELECT * FROM users WHERE email = '$email'";
+        	$result = mysqli_query($db, $query);
+        	if(mysqli_num_rows($result) > 0) {
+        		array_push($errors, "Email already in use.");
+        	}
         }
 
         if(empty($password_1)) {
-            array_push($errors, "Password is required");
+            array_push($errors, "Password is required.");
         }
 
         if($password_1 != $password_2) {
-            array_push($errors, "Passwords do NOT match");
+            array_push($errors, "Passwords do NOT match.");
         }
 
         //if there are no errors, save user to database
