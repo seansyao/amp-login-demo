@@ -4,7 +4,7 @@ body {
 }
 
 .header {
-    width: 30%;
+    width: 40%;
     margin: 50px auto 0px;
     color: white;
     background: #2b1d83;
@@ -16,7 +16,7 @@ body {
 }
 
 form, .content {
-    width: 30%;
+    width: 40%;
     margin: 0px auto;
     padding: 20px;
     border: 1px solid #B0C4DE;
@@ -68,4 +68,29 @@ form, .content {
 	background: #DFF0D8;
 	border: 1px solid #3C763D;
 	margin-bottom: 20px;
+}
+
+.info-icon {
+	width: 20px;
+}
+
+button {
+	cursor: pointer;
+}
+
+.register_button {
+	
+}
+
+.register_button:disabled {
+  	background-color: #cccccc;
+  	color: #666666;
+  	cursor: not-allowed;
+}
+
+span.password_req_1,
+span.password_req_2,
+span.password_req_3,
+span.password_req_4 {
+	color: #E0E0E0;
 }

@@ -10,8 +10,10 @@
 
     //if the register button is clicked
     if(isset($_POST['register'])) {
-        $username = mysqli_real_escape_string($db, $_POST['username']);
-        $email = mysqli_real_escape_string($db, $_POST['email']);
+        $username = strtolower(mysqli_real_escape_string($db, $_POST['username']));
+        $first_name = ucfirst(strtolower(mysqli_real_escape_string($db, $_POST['first_name'])));
+        $last_name = ucfirst(strtolower(mysqli_real_escape_string($db, $_POST['last_name'])));
+        $email = strtolower(mysqli_real_escape_string($db, $_POST['email']));
         $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
         $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
 
@@ -47,13 +49,21 @@
         if($password_1 != $password_2) {
             array_push($errors, "Passwords do NOT match.");
         }
+        
+        if(empty($first_name)){
+        	array_push($errors, "First name is required.");
+        }
+        
+        if(empty($last_name)){
+        	array_push($errors, "Lasst name is required.");
+        }
 
         //if there are no errors, save user to database
         if(count($errors) == 0) {
             //encrypt password before storing in database (security)
             $password = md5($password_1);
-            $sql = "INSERT INTO users (username, email, password) 
-                    VALUES ('$username', '$email', '$password')";
+            $sql = "INSERT INTO users (username, email, password, first_name, last_name) 
+                    VALUES ('$username', '$email', '$password', '$first_name', '$last_name')";
             mysqli_query($db, $sql);
             
             $_SESSION['username'] = $username;
@@ -80,11 +90,18 @@
     	if(count($errors) == 0) {
     		//encrypt password before comparing with that from database
     		$password = md5($password);
+    		// AND first_name = '$first_name' AND last_name = '$last_name'
     		$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     		$result = mysqli_query($db, $query);
     		if(mysqli_num_rows($result) == 1) {
+    			
+    			$row = mysqli_fetch_assoc($result);
+
+    			
     			//log user in
     			$_SESSION['username'] = $username;
+    			$_SESSION['first_name'] = $row['first_name'];
+    			$_SESSION['last_name'] = $row['last_name'];
     			$_SESSION['success'] = "You are now logged in.";
     			//redirect to homepage.
     			header('location: index.php');

@@ -28,8 +28,8 @@
         		</div>
         	<?php endif ?>
         	
-        	<?php if(isset($_SESSION['username'])):?>
-        		<p>Welcom <strong><?php echo $_SESSION['username']?></strong></p>
+        	<?php if(isset($_SESSION['first_name']) && isset($_SESSION['last_name'])):?>
+        		<p>Welcom <strong><?php echo ($_SESSION['first_name'] . ' ' . $_SESSION['last_name']) ?></strong></p>
         		<p><a href="index.php?logout=1" style="color: red;">Logout</a>
         	<?php endif ?>
         </div>
